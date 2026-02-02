@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyyyyyy's Special Day ♡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF69B4;
+            --secondary: #FFB6C1;
+            --tertiary: #FFC0CB;
+            --accent: #FF1493;
+            --text: #2C1B1B;
+            --bg: #FFF5F7;
+            --success: #87CEEB;
+            --dark-rose: #C71585;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #ffe4f0 100%);
+            color: var(--text);
+            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* GLOBAL ELEMENTS */
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 100;
+        }
+
+        .page-scroll {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 30px;
+            padding: 40px 20px;
+        }
+
+        /* PRELOADER */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg) 0%, #ffe4f0 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 40px;
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .teddy-bear {
+            font-size: 120px;
+            animation: teddy-bounce 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        @keyframes teddy-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .preloader-text {
+            font-size: clamp(18px, 5vw, 28px);
+            text-align: center;
+            color: var(--text);
+            font-weight: bold;
+            letter-spacing: 1px;
+            max-width: 85%;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .char {
+            display: inline;
+            opacity: 0;
+            animation: char-reveal 0.4s ease-out forwards;
+        }
+
+        @keyframes char-reveal {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* PAGE 1 - SPLASH */
+        #page1 {
+            background: linear-gradient(135deg, var(--bg) 0%, #ffe4f0 100%);
+        }
+
+        .floating-hearts-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 24px;
+            animation: heart-rise 6s ease-in forwards;
+            opacity: 0.7;
+        }
+
+        @keyframes heart-rise {
+            0% { transform: translateY(0) translateX(0); opacity: 0.8; }
+            100% { transform: translateY(-600px) translateX(calc(sin(var(--angle)) * 200px)); opacity: 0; }
+        }
+
+        .splash-text {
+            font-size: clamp(32px, 8vw, 56px);
+            text-align: center;
+            color: var(--primary);
+            font-weight: bold;
+            line-height: 1.6;
+            max-width: 90%;
+            animation: fade-in 1.2s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            padding: 10px 20px;
+            background: rgba(255, 105, 180, 0.3);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .skip-btn:hover {
+            background: rgba(255, 105, 180, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* PAGE 2 - PRANK */
+        #page2 {
+            background: linear-gradient(135deg, var(--tertiary) 0%, var(--bg) 100%);
+        }
+
+        .prank-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 80px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sticker-teddy {
+            top: 20px;
+            left: 20px;
+        }
+
+        .sticker-heart {
+            top: 30px;
+            right: 20px;
+            animation: float-heart 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+        }
+
+        @keyframes float-heart {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .prank-headline {
+            font-size: clamp(20px, 5vw, 32px);
+            color: var(--text);
+            font-weight: bold;
+            line-height: 1.8;
+            margin-bottom: 60px;
+            max-width: 95%;
+            animation: fade-in 1s ease-out 0.3s both;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slide-up 1s ease-out 0.8s both;
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 18px 50px;
+            font-size: 24px;
+            min-width: 200px;
+            animation: pulse-btn 2s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes pulse-btn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn-yes:active {
+            transform: scale(0.95);
+        }
+
+        .btn-no {
+            background: #E0E0E0;
+            color: #888;
+            padding: 14px 35px;
+            font-size: 20px;
+            opacity: 0.7;
+            border: 2px dashed #999;
+            transition: all 0.3s ease;
+        }
+
+        .btn-no:hover {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .btn-no.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0) rotate(360deg);
+        }
+
+        .sad-message {
+            font-size: clamp(24px, 6vw, 36px);
+            color: #888;
+            margin-top: 40px;
+            animation: fade-in 0.8s ease-out;
+        }
+
+        .character-walk {
+            position: absolute;
+            font-size: 80px;
+            bottom: 50%;
+            left: 0;
+            animation: walk-away 2s ease-in-out forwards;
+        }
+
+        @keyframes walk-away {
+            0% { left: 50%; transform: translateX(-50%) scaleX(1); }
+            100% { left: 100%; transform: translateX(0) scaleX(1); }
+        }
+
+        .character-run {
+            position: absolute;
+            font-size: 80px;
+            bottom: 50%;
+            right: -50px;
+            animation: run-back 1.5s ease-in-out forwards;
+        }
+
+        @keyframes run-back {
+            0% { right: -50px; transform: scaleX(-1); }
+            100% { right: 50%; transform: translateX(50%) scaleX(-1); }
+        }
+
+        .plot-twist {
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--primary);
+            margin-top: 30px;
+            animation: fade-in 0.8s ease-out;
+            font-weight: bold;
+            max-width: 90%;
+        }
+
+        .shake-btn {
+            animation: shake 0.5s ease-in-out infinite !important;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) scale(1) !important; }
+            25% { transform: translateX(-5px) scale(1) !important; }
+            75% { transform: translateX(5px) scale(1) !important; }
+        }
+
+        /* PAGE 3 - BIRTHDAY */
+        #page3 {
+            background: linear-gradient(135deg, #ffd1dc 0%, var(--bg) 100%);
+        }
+
+        .birthday-header {
+            font-size: clamp(36px, 8vw, 56px);
+            color: var(--primary);
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: sparkle 1s ease-out;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .birthday-subtext {
+            font-size: clamp(20px, 5vw, 32px);
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cake-emoji {
+            font-size: 120px;
+            animation: bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .cake-emoji:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .love-letter {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: left;
+            animation: unfold 1.2s ease-out;
+            font-family: 'Fredoka', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            color: var(--text);
+        }
+
+        #poemLetter p {
+            opacity: 0;
+            animation: fade-in 0.8s ease-out forwards;
+        }
+
+        .poem-title {
+            font-size: clamp(20px, 6vw, 28px);
+            color: var(--text);
+            margin-bottom: 30px;
+            margin-top: 20px;
+            animation: fade-in 0.8s ease-out 0.2s both;
+            font-weight: 700;
+            font-family: 'Fredoka', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        #poemLetter p:nth-child(1) { animation-delay: 0.3s; }
+        #poemLetter p:nth-child(3) { animation-delay: 0.8s; }
+        #poemLetter p:nth-child(5) { animation-delay: 1.3s; }
+        #poemLetter p:nth-child(7) { animation-delay: 1.8s; }
+        #poemLetter p:nth-child(9) { animation-delay: 2.3s; }
+        #poemLetter p:nth-child(11) { animation-delay: 2.8s; }
+
+        @keyframes unfold {
+            0% { transform: scaleY(0) rotateX(-90deg); opacity: 0; }
+            100% { transform: scaleY(1) rotateX(0); opacity: 1; }
+        }
+
+        .word-highlight {
+            color: var(--primary);
+            font-weight: bold;
+            animation: word-glow 0.5s ease-out;
+        }
+
+        @keyframes word-glow {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 32px;
+            animation: float-up 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-200px); }
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            margin-top: 40px;
+            font-size: 20px;
+            padding: 16px 40px;
+            min-width: 280px;
+        }
+
+        .btn-next:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.5);
+        }
+
+        /* PAGE 4 - VALENTINE */
+        #page4 {
+            background: linear-gradient(135deg, var(--bg) 0%, #ffe4f0 100%);
+        }
+
+        .roses-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            gap: 15px;
+            padding: 0 20px 20px;
+            pointer-events: none;
+            flex-wrap: wrap;
+            z-index: 1;
+        }
+
+        .rose {
+            font-size: 60px;
+            animation: grow-up 2s ease-out;
+            opacity: 0.8;
+        }
+
+        @keyframes grow-up {
+            0% { transform: scaleY(0) translateY(100px); opacity: 0; }
+            100% { transform: scaleY(1) translateY(0); opacity: 0.8; }
+        }
+
+        .valentine-header {
+            font-size: clamp(28px, 7vw, 48px);
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        .valentine-date {
+            font-size: clamp(18px, 5vw, 28px);
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .btn-forever {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            font-size: 22px;
+            padding: 18px 45px;
+            min-width: 300px;
+            margin-top: 30px;
+            animation: pulse-btn 2s ease-in-out infinite;
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.4);
+        }
+
+        .btn-forever:hover {
+            transform: scale(1.08);
+            box-shadow: 0 25px 60px rgba(255, 105, 180, 0.6);
+        }
+
+        .final-message {
+            font-size: clamp(28px, 6vw, 40px);
+            color: var(--primary);
+            font-weight: bold;
+            text-align: center;
+            line-height: 2;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-top: 40px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* CANVAS FOR PARTICLES */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .buttons-container {
+                gap: 15px;
+            }
+
+            .btn {
+                padding: 14px 30px;
+                font-size: 18px;
+            }
+
+            .btn-yes {
+                padding: 16px 35px;
+                font-size: 20px;
+                min-width: auto;
+            }
+
+            .love-letter {
+                padding: 25px;
+                font-size: 16px;
+                max-width: 95%;
+            }
+
+            .teddy-bear {
+                font-size: 80px;
+            }
+
+            .preloader-text {
+                font-size: clamp(16px, 5vw, 24px);
+            }
+
+            .skip-btn {
+                padding: 8px 15px;
+                font-size: 12px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .btn-next, .btn-forever {
+                min-width: auto;
+                width: 90%;
+                max-width: 300px;
+            }
+        }
+
+        /* SCROLL BEHAVIOR */
+        .page-scroll {
+            scroll-behavior: smooth;
+        }
+
+        /* POOF EFFECT */
+        .poof {
+            position: fixed;
+            font-size: 30px;
+            animation: poof-burst 0.8s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes poof-burst {
+            0% { opacity: 1; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.2) translateY(-50px); }
+        }
+
+        /* SMOKE PARTICLES */
+        .smoke {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .mouse-trail {
+            position: fixed;
+            font-size: 14px;
+            pointer-events: none;
+            animation: trail-fade 1s ease-out forwards;
+        }
+
+        @keyframes trail-fade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- PRELOADER -->
+        <div id="preloader">
+            <div class="teddy-bear">🧸</div>
+            <div class="preloader-text" id="preloaderText"></div>
+        </div>
+
+        <!-- PAGE 1: SPLASH -->
+        <div class="page" id="page1">
+            <div class="floating-hearts-bg" id="floatingHearts"></div>
+            <div class="splash-text" id="splashText"></div>
+            <button class="skip-btn" onclick="skipToPage(2)">Skip →</button>
+        </div>
+
+        <!-- PAGE 2: PRANK -->
+        <div class="page" id="page2">
+            <div class="prank-content">
+                <div class="prank-headline" id="prankHeadline">
+                    <div class="sticker sticker-teddy">🧸</div>
+                    <div class="sticker sticker-heart">💕</div>
+                    I wrote something for you ♡
+                </div>
+                <div class="poem-title">I wrote something for you ♡</div>
+                <div class="love-letter" id="poemLetter" style="margin-top: 40px;">
+                    <p>You are the softest part of every day,<br>
+                    the quiet laugh that lives inside my chest,<br>
+                    the reason my heart forgets to be scared.</p><br>
+                    <p>When the world gets loud,<br>
+                    your name is the only sound that calms me.<br>
+                    When I'm lost,<br>
+                    your voice is the only way home.</p><br>
+                    <p>You matter more than every tomorrow I've ever wanted,<br>
+                    more than every dream I've ever had,<br>
+                    more than every breath I still have left to take.</p><br>
+                    <p>I don't just love you—<br>
+                    I live inside the warmth of you.<br>
+                    You are my safest place,<br>
+                    my favorite feeling,<br>
+                    my forever person.</p><br>
+                    <p>This heart?<br>
+                    It only learned to beat properly<br>
+                    the day it met you.</p><br>
+                    <p>— Shivamm<br>
+                    (yours, always and always) ♡</p>
+                </div>
+                <div class="buttons-container">
+                    <button class="btn btn-yes" id="btnYes" onclick="goToPage(3)">YES CUTUUUUUU ♡</button>
+                    <button class="btn btn-no" id="btnNo" onclick="triggerPrank()">nahi…</button>
+                </div>
+                <div id="prankMessages"></div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: BIRTHDAY -->
+        <div class="page" id="page3">
+            <div class="page-scroll" id="page3Scroll">
+                <div class="birthday-header">🎂 HAPPY BIRTHDAY SHREYYYYYY!!! 🎂</div>
+                <div class="birthday-subtext">OMG you're another year older<br>and somehow EVEN MORE BEAUTIFUL 😭💕</div>
+                <div class="cake-emoji" onclick="explodeCake(event)">🎂</div>
+                <div class="love-letter" id="birthdayLetter">
+                    <p>Hey cutuuuu patootoooo ♡</p><br>
+                    <p>Aaj tera birthday hai aur main bas yeh bolna chahta hoon:</p><br>
+                    <p>You are the best thing that ever happened to me.<br>
+                    Seriously. Nothing and no one comes even close.</p><br>
+                    <p>Thank you for being born.<br>
+                    Thank you for being here.<br>
+                    Thank you for being mine.</p><br>
+                    <p>You are my favorite person in the whole world.<br>
+                    And I'm never letting you go. ♡</p><br>
+                    <p>Happy Birthday meri bacchaaa<br>
+                    I love you the most today… and even more tomorrow.</p><br>
+                    <p>— Tera Shivamm (forever) ♡</p>
+                </div>
+                <button class="btn btn-next" onclick="goToPage(4)">Aur ab Valentine ka surprise bhi dekh lete ho? 💕</button>
+            </div>
+        </div>
+
+        <!-- PAGE 4: VALENTINE -->
+        <div class="page" id="page4">
+            <div class="roses-bg" id="rosesContainer"></div>
+            <div class="page-scroll" id="page4Scroll">
+                <div class="valentine-header">
+                    Happy Valentine's Day 💕<br>
+                    <span class="valentine-date">14 February 2025</span>
+                </div>
+                <div style="text-align: center; font-size: clamp(18px, 5vw, 24px); color: var(--text); margin-bottom: 30px; font-style: italic;">
+                    "One day isn't enough to love you,<br>so every day is Valentine's Day for me ♡"
+                </div>
+                <div class="love-letter" id="valentineLetter">
+                    <p>Shreyyyyyy,</p><br>
+                    <p>Jab maine tujhe pehli baar dekha,<br>
+                    I didn't think I could fall more in love.<br>
+                    Har din tu mujhe wrong prove kar deti hai.</p><br>
+                    <p>Tu nahi jaanti but:</p>
+                    <p>✨ Tu mera first thought when I wake up<br>
+                    ✨ Tu mera last thought before I sleep<br>
+                    ✨ Tu meri favorite notification<br>
+                    ✨ Tu meri favorite person forever</p><br>
+                    <p>I love you not just on Valentine's Day,<br>
+                    but on every single day of the year.<br>
+                    More in the morning,<br>
+                    more at night,<br>
+                    more with each passing moment.</p><br>
+                    <p>You make my life:</p>
+                    <p>✨ More colorful<br>
+                    💕 More meaningful<br>
+                    😊 More happy<br>
+                    🏠 More like home</p><br>
+                    <p>Main tujhse ek promise kar raha hoon:<br>
+                    I will love you<br>
+                    more fiercely,<br>
+                    more deeply,<br>
+                    more truly,<br>
+                    with every breath I take.</p><br>
+                    <p>Will you be my Valentine?<br>
+                    Will you be my forever?<br>
+                    Will you say YES? 👉👈</p><br>
+                    <p>— Tera Shivamm<br>
+                    (The guy who loves you infinitely) ♡</p>
+                </div>
+                <button class="btn btn-forever" onclick="finalExplosion()">YES SHIVAMM, I LOVE YOU FOREVER ♡</button>
+            </div>
+        </div>
+
+        <!-- PARTICLE CANVAS -->
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <script>
+        // ===== AUDIO CONTEXT =====
+        let audioCtx;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(freq, duration = 100, type = 'sine') {
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + duration / 1000);
+                osc.start(now);
+                osc.stop(now + duration / 1000);
+            } catch (e) { console.log(e); }
+        }
+
+        function kissSound() {
+            playSound(800, 80);
+            setTimeout(() => playSound(600, 80), 50);
+        }
+
+        function boing() {
+            playSound(500, 50);
+            setTimeout(() => playSound(700, 50), 50);
+        }
+
+        function sadWhoosh() {
+            playSound(400, 300, 'sine');
+        }
+
+        // ===== PRELOADER =====
+        function animatePreloader() {
+            const text = "happy birthday\ni have made something for you, hope you will like it";
+            const textEl = document.getElementById('preloaderText');
+            let index = 0;
+
+            function typeChar() {
+                if (index < text.length) {
+                    const char = text[index];
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    span.style.animationDelay = (index * 0.05) + 's';
+                    textEl.appendChild(span);
+                    index++;
+                    setTimeout(typeChar, 50);
+                }
+            }
+
+            typeChar();
+
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+                goToPage(1);
+            }, 12000);
+        }
+
+        // ===== PAGE NAVIGATION =====
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            if (pageNum === 1) {
+                animateSplashText();
+                createFloatingHearts();
+            } else if (pageNum === 3) {
+                animateBirthdayLetter();
+                triggerRandomEmojis();
+            } else if (pageNum === 4) {
+                createRoses();
+                animateValentineLetter();
+            }
+        }
+
+        function skipToPage(pageNum) {
+            document.getElementById('preloader').classList.add('hidden');
+            goToPage(pageNum);
+        }
+
+        // ===== SPLASH SCREEN =====
+        function animateSplashText() {
+            const texts = [
+                "Hey cutuuuu 👋",
+                "Shivamm here 💕",
+                "I made something special for you…",
+                "Ready to see what it is?"
+            ];
+
+            const splashText = document.getElementById('splashText');
+            splashText.innerHTML = '';
+            
+            let totalDelay = 0;
+            texts.forEach((text, idx) => {
+                const line = document.createElement('div');
+                line.style.animation = `fade-in 1s ease-out ${totalDelay}s both`;
+                line.textContent = text;
+                line.style.marginBottom = '15px';
+                splashText.appendChild(line);
+                totalDelay += 1.2;
+            });
+        }
+
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            container.innerHTML = '';
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.textContent = '♡';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.setProperty('--angle', Math.random() * Math.PI * 2);
+                heart.style.animationDuration = (Math.random() * 2 + 6) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }, 500);
+        }
+
+        // ===== PRANK SCREEN =====
+        function triggerPrank() {
+            const btnNo = document.getElementById('btnNo');
+            const btnYes = document.getElementById('btnYes');
+            const prankMessages = document.getElementById('prankMessages');
+
+            sadWhoosh();
+            
+            // Poof animation
+            for (let i = 0; i < 8; i++) {
+                const poof = document.createElement('div');
+                poof.className = 'poof';
+                poof.textContent = '💨';
+                poof.style.left = (btnNo.getBoundingClientRect().left + btnNo.offsetWidth / 2) + 'px';
+                poof.style.top = (btnNo.getBoundingClientRect().top + btnNo.offsetHeight / 2) + 'px';
+                document.body.appendChild(poof);
+                setTimeout(() => poof.remove(), 800);
+            }
+
+            btnNo.classList.add('hidden');
+
+            // Sad message
+            const sadMsg = document.createElement('div');
+            sadMsg.className = 'sad-message';
+            sadMsg.textContent = 'Accha thik hai… main jaata hoon 😭';
+            prankMessages.appendChild(sadMsg);
+
+            // Walking character
+            const walkChar = document.createElement('div');
+            walkChar.className = 'character-walk';
+            walkChar.textContent = '🚶‍♂️';
+            prankMessages.appendChild(walkChar);
+
+            setTimeout(() => {
+                // Running character
+                const runChar = document.createElement('div');
+                runChar.className = 'character-run';
+                runChar.textContent = '🏃‍♂️';
+                prankMessages.appendChild(runChar);
+
+                // Plot twist
+                const twist = document.createElement('div');
+                twist.className = 'plot-twist';
+                twist.innerHTML = 'JHOOTH BOL DIYA TU!!! 🤭<br>Mujhe pata tha hehe<br>Chal ab YES toh press kar ही do naaaaa 👉👈';
+                prankMessages.appendChild(twist);
+
+                // Shake button
+                btnYes.classList.add('shake-btn');
+                btnYes.textContent = 'Comon bacchaaa, click karrrr 💕';
+            }, 2500);
+        }
+
+        // ===== BIRTHDAY SCREEN =====
+        function animateBirthdayLetter() {
+            const letter = document.getElementById('birthdayLetter');
+            const paragraphs = letter.querySelectorAll('p');
+            
+            paragraphs.forEach((p, idx) => {
+                p.style.opacity = '0';
+                p.style.animation = `fade-in 0.8s ease-out ${idx * 0.2}s both`;
+            });
+        }
+
+        function triggerRandomEmojis() {
+            const emojis = ['💕', '😊', '😭', '✨', '🎉', '💐'];
+            const triggers = {
+                'laugh': '😂',
+                'smile': '✨',
+                'love': '💕'
+            };
+
+            setInterval(() => {
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                const floatEmoji = document.createElement('div');
+                floatEmoji.className = 'floating-emoji';
+                floatEmoji.textContent = emoji;
+                floatEmoji.style.left = Math.random() * 90 + 5 + '%';
+                floatEmoji.style.top = '50%';
+                document.getElementById('page3').appendChild(floatEmoji);
+                setTimeout(() => floatEmoji.remove(), 3000);
+            }, 2000);
+        }
+
+        function explodeCake(event) {
+            boing();
+            createParticleExplosion(event.clientX, event.clientY, 30, ['🎂', '🎉', '✨', '💕']);
+        }
+
+        // ===== VALENTINE SCREEN =====
+        function createRoses() {
+            const container = document.getElementById('rosesContainer');
+            container.innerHTML = '';
+            const roseCount = window.innerWidth < 768 ? 5 : 8;
+            
+            for (let i = 0; i < roseCount; i++) {
+                const rose = document.createElement('div');
+                rose.className = 'rose';
+                rose.textContent = '🌹';
+                rose.style.animationDelay = (i * 0.15) + 's';
+                container.appendChild(rose);
+            }
+        }
+
+        function animateValentineLetter() {
+            const letter = document.getElementById('valentineLetter');
+            const paragraphs = letter.querySelectorAll('p');
+            
+            paragraphs.forEach((p, idx) => {
+                p.style.opacity = '0';
+                p.style.animation = `fade-in 0.8s ease-out ${idx * 0.15}s both`;
+            });
+        }
+
+        function finalExplosion() {
+            boing();
+            kissSound();
+            createMassiveExplosion();
+            
+            setTimeout(() => {
+                const scroll = document.getElementById('page4Scroll');
+                scroll.innerHTML = `
+                    <div class="final-message">
+                        💕 I LOVE YOU SHREYYYYYY 💕
+                    </div>
+                    <div style="text-align: center; font-size: clamp(20px, 5vw, 28px); color: var(--text); line-height: 2; margin-top: 60px;">
+                        <p>Tu meri cutuuu hai</p>
+                        <p>Tu meri sab kuch hai ♡</p>
+                        <br>
+                        <p>Thank you for saying YES.</p>
+                        <p>Thank you for choosing me.</p>
+                        <p>Thank you for being YOU.</p>
+                        <br>
+                        <p>I promise to love you every day,<br>every hour,<br>every moment.</p>
+                        <br>
+                        <p>You're my forever.<br>You're my always.<br>You're my everything.</p>
+                        <br>
+                        <p>— Shivamm ♡</p>
+                        <br>
+                        <p style="font-size: clamp(16px, 4vw, 22px); color: var(--primary);">P.S. - Now pick up the phone and call me 😭💕</p>
+                        <br><br>
+                        <button class="btn btn-forever" onclick="goToPage(2)" style="margin-top: 20px; background: linear-gradient(135deg, #87CEEB 0%, #FFB6C1 100%); font-size: 18px;">↻ Rewind - See it again 💕</button>
+                    </div>
+                `;
+                
+                // Confetti continues to fall
+                setInterval(() => {
+                    createParticleExplosion(Math.random() * window.innerWidth, -50, 5, ['🎉', '✨', '💕', '🌹', '❤️']);
+                }, 500);
+            }, 1000);
+        }
+
+        // ===== PARTICLE SYSTEM =====
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+
+        class Particle {
+            constructor(x, y, vx, vy, emoji) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.emoji = emoji;
+                this.life = 1;
+                this.decay = Math.random() * 0.01 + 0.008;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.2; // gravity
+                this.life -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.font = '30px Arial';
+                ctx.fillText(this.emoji, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        function createParticleExplosion(x, y, count, emojis) {
+            for (let i = 0; i < count; i++) {
+                const angle = (Math.PI * 2 * i) / count;
+                const speed = Math.random() * 8 + 4;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed - 3;
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                particles.push(new Particle(x, y, vx, vy, emoji));
+            }
+        }
+
+        function createMassiveExplosion() {
+            const emojis = ['💕', '✨', '🌹', '🎉', '❤️', '💐', '😍', '🥰', '😭'];
+            
+            // Explosion from center
+            for (let i = 0; i < 100; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 12 + 6;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                particles.push(new Particle(window.innerWidth / 2, window.innerHeight / 2, vx, vy, emoji));
+            }
+
+            // Rain from top
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                    particles.push(new Particle(x, -50, Math.random() * 4 - 2, Math.random() * 4 + 2, emoji));
+                }, i * 30);
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            if (particles.length > 0) {
+                requestAnimationFrame(animateParticles);
+            }
+        }
+
+        // ===== EASTER EGGS =====
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                createMassiveExplosion();
+                kissSound();
+                console.log('EASTER EGG ACTIVATED! 🎉');
+            }
+
+            // Type "cutuuuu" for heart rain
+            if (e.key.toLowerCase() === 'c' || e.key.toLowerCase() === 'u') {
+                if (Math.random() > 0.7) {
+                    for (let i = 0; i < 20; i++) {
+                        setTimeout(() => {
+                            createParticleExplosion(Math.random() * window.innerWidth, -50, 5, ['♡', '💕', '✨']);
+                        }, i * 50);
+                    }
+                }
+            }
+        });
+
+        // Mouse trail
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.9) {
+                const trail = document.createElement('div');
+                trail.className = 'mouse-trail';
+                trail.textContent = ['💕', '✨', '♡'][Math.floor(Math.random() * 3)];
+                trail.style.left = e.pageX + 'px';
+                trail.style.top = e.pageY + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 1000);
+            }
+        });
+
+        // Vibration on buttons
+        ['btnYes', 'btnNo', 'btnValentine', 'btnForever', 'btnNext'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', () => {
+                    if (navigator.vibrate) navigator.vibrate(50);
+                });
+            }
+        });
+
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // ===== INIT =====
+        animatePreloader();
+        requestAnimationFrame(animateParticles);
+    </script>
+</body>
+</html>
